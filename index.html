@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dhanashala — From your first year to your first offer</title>
+<meta name="description" content="Dhanashala is a student ecosystem: academic learning, job-relevant skills, practical projects, career readiness and a hiring pipeline — from the first year of college to a first offer.">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="Dhanashala — A universe of success">
+<meta property="og:description" content="Academic learning, job-relevant skills, real projects and a hiring pipeline — from first year to first offer.">
+<meta property="og:image" content="assets/dhanashala-lockup-horizontal.png">
+<meta name="theme-color" content="#07301A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Dhanashala — design tokens
+   Palette sampled from the logo artwork (assets/).
+   ============================================================ */
+:root{
+  --ink:            #07301A;  /* near-black green: wordmark, headings   */
+  --ink-70:         #3C574A;  /* body text on light                     */
+  --ink-45:         #5C7060;  /* meta, captions (AA on paper + white) */
+  --green-900:      #07301A;
+  --green-800:      #0A4A26;
+  --green-700:      #0C7F35;  /* primary — sampled from the leaf         */
+  --green-600:      #109C41;
+  --green-100:      #DDF0E4;
+  --green-050:      #EFF8F2;
+  --gold:           #F0B000;  /* sampled from the sun disc              */
+  --gold-600:       #E0A000;
+  --gold-ink:       #8A5E00;  /* gold for TEXT on light ground          */
+  --gold-300:       #F6D98A;
+  --gold-050:       #FDF6E6;
+  --paper:          #F7F5EE;  /* warm neutral, stands in for bp's #F7F8F0 */
+  --white:          #FFFFFF;
+  --line:           rgba(12,127,53,.16);
+  --line-soft:      rgba(7,48,26,.10);
+
+  --sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --display: "Outfit", "Source Sans 3", system-ui, sans-serif;
+
+  --wrap: 1280px;
+  --gut: clamp(20px, 4.2vw, 48px);
+  --r-card: 20px;
+  --r-pill: 999px;
+
+  --ease: cubic-bezier(.2,.7,.3,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; scroll-padding-top:96px; }
+body{
+  margin:0;
+  background:var(--white);
+  color:var(--ink-70);
+  font-family:var(--sans);
+  font-size:clamp(16px,.55vw + 14.6px,17.5px);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{ max-width:100%; height:auto; display:block; }
+a{ color:inherit; }
+
+h1,h2,h3,h4,.display{ font-family:var(--display); color:var(--ink); font-weight:500; line-height:1.06; margin:0; text-wrap:balance; }
+h1{ font-size:clamp(2.6rem,5.4vw,4.3rem); font-weight:400; letter-spacing:-.02em; }
+h2{ font-size:clamp(1.95rem,3.3vw,2.85rem); font-weight:400; letter-spacing:-.015em; }
+h3{ font-size:clamp(1.15rem,1.5vw,1.4rem); font-weight:500; letter-spacing:-.01em; }
+h4{ font-size:1.02rem; font-weight:600; }
+p{ margin:0; }
+
+.wrap{ width:100%; max-width:var(--wrap); margin-inline:auto; padding-inline:var(--gut); }
+
+.skip{
+  position:absolute; left:-9999px; top:0; z-index:100;
+  background:var(--green-700); color:#fff; padding:12px 18px; border-radius:0 0 10px 0;
+  font-weight:600; text-decoration:none;
+}
+.skip:focus{ left:0; }
+.visually-hidden{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+:where(a,button,input,summary):focus-visible{
+  outline:3px solid var(--gold);
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+/* ---------- eyebrow + section headings ---------- */
+.eyebrow{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--display); font-size:.78rem; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--green-700);
+  margin:0 0 18px;
+}
+.eyebrow::before{ content:""; width:34px; height:2px; background:var(--gold); flex:none; }
+.eyebrow--light{ color:var(--gold-300); }
+.eyebrow--light::before{ background:var(--gold); }
+
+.lede{ font-size:clamp(1.02rem,1.2vw,1.16rem); color:var(--ink-70); max-width:58ch; }
+.section-head{ max-width:62ch; margin-bottom:clamp(40px,5vw,64px); }
+.section-head .lede{ margin-top:18px; }
+section{ padding-block:clamp(72px,8.5vw,124px); }
+section[id]{ scroll-margin-top:88px; }
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  min-height:48px; padding:12px 26px;
+  border-radius:var(--r-pill); border:1px solid transparent;
+  font-family:var(--display); font-size:.98rem; font-weight:500; letter-spacing:.005em;
+  text-decoration:none; cursor:pointer; background:none;
+  transition:background-color .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease);
+}
+.btn:active{ transform:translateY(1px); }
+.btn--gold{ background:var(--gold); color:var(--ink); }
+.btn--gold:hover{ background:var(--gold-600); }
+.btn--solid{ background:var(--green-700); color:#fff; }
+.btn--solid:hover{ background:var(--green-800); }
+.btn--ghost{ border-color:rgba(12,127,53,.38); color:var(--green-700); }
+.btn--ghost:hover{ border-color:var(--green-700); background:var(--green-050); }
+.btn--onDark{ border-color:rgba(255,255,255,.5); color:#fff; }
+.btn--onDark:hover{ background:rgba(255,255,255,.12); border-color:#fff; }
+.btn--sm{ min-height:42px; padding:9px 20px; font-size:.92rem; }
+
+/* ============================ HEADER ============================ */
+.hdr{
+  position:sticky; top:0; z-index:60;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:saturate(1.4) blur(12px);
+  border-bottom:1px solid transparent;
+  transition:border-color .25s var(--ease), background-color .25s var(--ease);
+}
+.hdr.is-stuck{ border-bottom-color:var(--line-soft); background:rgba(255,255,255,.96); }
+.hdr__in{ display:flex; align-items:center; gap:24px; min-height:78px; }
+.hdr__logo img{ height:clamp(42px,3.9vw,54px); width:auto; }
+.hdr__nav{ display:flex; gap:4px; margin-left:auto; }
+.hdr__nav a{
+  text-decoration:none; color:var(--ink); font-family:var(--display);
+  font-size:.96rem; font-weight:500; padding:10px 14px; border-radius:var(--r-pill);
+}
+.hdr__nav a:hover{ background:var(--green-050); color:var(--green-700); }
+.hdr__cta{ display:flex; align-items:center; gap:10px; }
+.burger{
+  display:none; width:46px; height:46px; border:1px solid var(--line);
+  border-radius:var(--r-pill); background:#fff; cursor:pointer; padding:0;
+  place-items:center; margin-left:auto;
+}
+.burger span{ display:block; width:18px; height:1.6px; background:var(--ink); position:relative; transition:transform .25s var(--ease), background-color .2s; }
+.burger span::before,.burger span::after{ content:""; position:absolute; left:0; width:18px; height:1.6px; background:var(--ink); transition:transform .25s var(--ease); }
+.burger span::before{ top:-6px; } .burger span::after{ top:6px; }
+.burger[aria-expanded="true"] span{ background:transparent; }
+.burger[aria-expanded="true"] span::before{ transform:translateY(6px) rotate(45deg); }
+.burger[aria-expanded="true"] span::after{ transform:translateY(-6px) rotate(-45deg); }
+
+.mobile{ display:none; border-top:1px solid var(--line-soft); padding:14px var(--gut) 24px; background:#fff; }
+.mobile a{ display:block; text-decoration:none; color:var(--ink); font-family:var(--display); font-size:1.12rem; font-weight:500; padding:13px 0; border-bottom:1px solid var(--line-soft); }
+.mobile .btn{ width:100%; margin-top:20px; }
+.mobile.is-open{ display:block; }
+
+/* ============================ HERO ============================ */
+.hero{ padding-block:0 clamp(56px,6vw,88px); }
+.hero__grid{
+  display:grid; grid-template-columns:1.06fr .94fr;
+  border-radius:26px; overflow:hidden; margin-top:clamp(20px,2.5vw,34px);
+  box-shadow:0 24px 60px -34px rgba(7,48,26,.42);
+}
+.hero__panel{
+  background:linear-gradient(168deg,var(--green-800) 0%,var(--green-900) 58%,#051f12 100%);
+  color:#fff; padding:clamp(36px,4.4vw,64px);
+  display:flex; flex-direction:column; justify-content:center;
+  position:relative; overflow:hidden;
+}
+.hero__panel::after{
+  content:""; position:absolute; right:-140px; top:-120px; width:460px; height:460px;
+  background:radial-gradient(circle at 50% 50%, rgba(240,176,0,.20), rgba(240,176,0,0) 66%);
+  pointer-events:none;
+}
+.hero__mark{ width:clamp(66px,7vw,86px); margin-bottom:clamp(26px,3vw,38px); position:relative; z-index:1; }
+.hero h1{ color:#fff; position:relative; z-index:1; }
+.hero h1 em{ font-style:normal; color:var(--gold-300); }
+.hero__sub{ margin-top:22px; font-size:clamp(1.02rem,1.15vw,1.14rem); color:rgba(255,255,255,.82); max-width:46ch; position:relative; z-index:1; }
+.hero__actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:34px; position:relative; z-index:1; }
+.hero__note{ margin-top:26px; font-size:.86rem; color:rgba(255,255,255,.58); letter-spacing:.01em; position:relative; z-index:1; }
+
+.hero__rail{
+  background:var(--paper); padding:clamp(32px,4vw,56px);
+  display:flex; flex-direction:column; justify-content:center;
+  border-left:1px solid var(--line-soft); position:relative;
+}
+.rail__eyebrow{ font-family:var(--display); font-size:.74rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-45); margin:0 0 12px; }
+.rail__h{ font-size:clamp(1.5rem,2.2vw,2rem); font-weight:400; letter-spacing:-.015em; margin:0 0 clamp(22px,2.4vw,32px); }
+.rail{ list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
+.rail li{ border-bottom:1px solid var(--line); }
+.rail a{
+  display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:18px;
+  padding:clamp(17px,1.7vw,23px) 4px; text-decoration:none; color:var(--ink);
+  transition:padding-left .25s var(--ease), color .2s var(--ease);
+}
+.rail a:hover{ padding-left:12px; color:var(--green-700); }
+.rail__n{ font-family:var(--display); font-size:.88rem; font-weight:600; color:var(--gold-ink); letter-spacing:.04em; }
+.rail__t{ font-family:var(--display); font-size:clamp(1.04rem,1.15vw,1.14rem); font-weight:500; line-height:1.3; }
+.rail__s{ font-size:.8rem; color:var(--ink-45); }
+.rail a:hover .rail__s{ color:var(--green-700); }
+.rail__foot{ margin-top:clamp(22px,2.4vw,30px); font-size:.88rem; color:var(--ink-45); }
+.rail__foot a{ color:var(--green-700); font-weight:600; text-decoration:none; }
+.rail__foot a:hover{ text-decoration:underline; }
+
+/* ============================ PROBLEM ============================ */
+.problem{ background:var(--paper); }
+.problem__grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(36px,5vw,80px); align-items:start; }
+.problem__body p + p{ margin-top:18px; }
+.problem__sign{
+  margin-top:28px; padding-left:20px; border-left:3px solid var(--gold);
+  font-family:var(--display); font-size:1.06rem; color:var(--ink); font-style:italic; line-height:1.5;
+  text-wrap:balance; max-width:34ch;
+}
+.problem__list{ list-style:none; margin:0; padding:0; }
+.problem__list li{ padding:24px 0; border-top:1px solid var(--line); }
+.problem__list li:last-child{ border-bottom:1px solid var(--line); }
+.problem__list h3{ margin-bottom:7px; }
+.problem__list p{ color:var(--ink-70); text-wrap:pretty; }
+
+/* ============================ STAGES ============================ */
+.stage{
+  border-top:1px solid var(--line);
+}
+.stage:first-of-type{ border-top:1px solid var(--line); }
+.stage__btn{
+  width:100%; display:grid; grid-template-columns:74px minmax(0,1.15fr) minmax(0,1.25fr) auto 44px;
+  align-items:center; gap:clamp(14px,2vw,30px);
+  padding:clamp(22px,2.4vw,30px) 0; background:none; border:0; cursor:pointer; text-align:left;
+  color:inherit; font:inherit;
+}
+.stage__n{
+  font-family:var(--display); font-size:clamp(1.5rem,2.6vw,2.15rem); font-weight:400;
+  color:var(--gold-ink); line-height:1; letter-spacing:-.02em;
+}
+.stage__t{ font-family:var(--display); font-size:clamp(1.2rem,1.9vw,1.62rem); font-weight:500; color:var(--ink); line-height:1.22; }
+.stage__d{ color:var(--ink-70); font-size:.98rem; }
+.nb{ white-space:nowrap; }
+.chip{
+  display:inline-flex; align-items:center; gap:7px; white-space:nowrap;
+  font-family:var(--display); font-size:.76rem; font-weight:600; letter-spacing:.06em;
+  text-transform:uppercase; padding:6px 13px; border-radius:var(--r-pill);
+}
+.chip::before{ content:""; width:7px; height:7px; border-radius:50%; background:currentColor; }
+.chip--live{ background:var(--green-050); color:var(--green-700); }
+.chip--build{ background:var(--gold-050); color:#7A5200; }
+.chip--plan{ background:#EFEFEA; color:#4C5F54; }
+.chev{ width:44px; height:44px; border:1px solid rgba(12,127,53,.30); border-radius:50%; display:grid; place-items:center; color:var(--green-700); transition:transform .3s var(--ease), background-color .25s, border-color .25s; }
+.chev svg{ width:14px; height:14px; }
+.stage__btn:hover .stage__t{ color:var(--green-700); }
+.stage__btn:hover .chev{ border-color:var(--green-700); }
+.stage__btn[aria-expanded="true"] .chev{ transform:rotate(180deg); background:var(--green-700); color:#fff; border-color:var(--green-700); }
+
+.stage__panel{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .4s var(--ease); }
+.stage__panel.is-open{ grid-template-rows:1fr; }
+.stage__inner{ overflow:hidden; }
+.stage__cols{
+  display:grid; grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,44px);
+  padding:0 0 clamp(26px,3vw,38px) 74px;
+}
+.stage__cols h4{
+  font-family:var(--display); font-size:.74rem; font-weight:600; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--ink-45); margin:0 0 12px;
+}
+.stage__cols p{ color:var(--ink-70); }
+.stage__cols > div + div{ border-left:1px solid var(--line); padding-left:clamp(20px,3vw,44px); }
+
+/* ============================ COHORTS ============================ */
+.cohorts{ background:var(--paper); }
+.cohorts__head{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:34px; }
+.note{
+  display:inline-flex; align-items:center; gap:8px; font-size:.8rem; color:var(--ink-45);
+  border:1px dashed rgba(12,127,53,.35); border-radius:var(--r-pill); padding:5px 14px; margin-top:18px;
+}
+.cohort{
+  display:grid; grid-template-columns:118px minmax(0,1.5fr) minmax(0,1fr) 132px 116px;
+  align-items:center; gap:clamp(12px,2vw,26px);
+  background:#fff; border:1px solid var(--line-soft); border-radius:var(--r-card);
+  padding:20px 24px; margin-bottom:10px;
+  transition:border-color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.cohort:hover{ border-color:rgba(12,127,53,.34); transform:translateY(-2px); box-shadow:0 14px 30px -22px rgba(7,48,26,.4); }
+.cohort__mode{ font-family:var(--display); font-size:.8rem; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-45); }
+.cohort__title{ font-family:var(--display); font-size:1.12rem; font-weight:500; color:var(--ink); line-height:1.3; }
+.cohort__meta{ font-size:.92rem; color:var(--ink-70); }
+.cohort__date{ font-size:.92rem; color:var(--ink-70); font-variant-numeric:tabular-nums; }
+.save{
+  justify-self:end; display:inline-flex; align-items:center; gap:8px;
+  min-height:42px; padding:9px 18px; border-radius:var(--r-pill);
+  border:1px solid rgba(12,127,53,.34); background:#fff; color:var(--green-700);
+  font-family:var(--display); font-size:.9rem; font-weight:500; cursor:pointer;
+  transition:background-color .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+}
+.save svg{ width:15px; height:15px; }
+.save:hover{ background:var(--green-050); border-color:var(--green-700); }
+.save[aria-pressed="true"]{ background:var(--green-700); border-color:var(--green-700); color:#fff; }
+
+/* ============================ WHAT YOU GET ============================ */
+.benefits{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(26px,3vw,40px) clamp(24px,3vw,48px); }
+.benefit__rule{ width:38px; height:3px; background:var(--gold); margin-bottom:20px; }
+.benefit h3{ margin-bottom:16px; }
+.benefit ul{ list-style:none; margin:0; padding:0; }
+.benefit li{ padding:14px 0; border-top:1px solid var(--line-soft); }
+.benefit li h4{ font-size:.97rem; margin-bottom:3px; }
+.benefit li p{ font-size:.9rem; color:var(--ink-45); line-height:1.55; text-wrap:pretty; }
+
+/* ============================ EXPIRY DEMO ============================ */
+.expiry{ background:var(--green-900); color:#fff; position:relative; overflow:hidden; }
+.expiry::before{
+  content:""; position:absolute; inset:auto -120px -220px auto; width:620px; height:620px;
+  background:radial-gradient(circle at 50% 50%, rgba(12,127,53,.55), rgba(7,48,26,0) 70%); pointer-events:none;
+}
+.expiry h2{ color:#fff; }
+.expiry .lede{ color:rgba(255,255,255,.84); }
+.expiry__grid{ display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(32px,4.5vw,64px); align-items:center; }
+.expiry__points{ list-style:none; margin:30px 0 0; padding:0; }
+.expiry__points li{ display:grid; grid-template-columns:auto 1fr; gap:16px; padding:18px 0; border-top:1px solid rgba(255,255,255,.18); }
+.expiry__points li:last-child{ border-bottom:1px solid rgba(255,255,255,.18); }
+.expiry__points h3{ color:#fff; margin-bottom:3px; font-size:1.02rem; }
+.expiry__points p{ color:rgba(255,255,255,.80); font-size:.93rem; text-wrap:pretty; }
+.tick{ width:26px; height:26px; border-radius:50%; background:rgba(240,176,0,.20); color:var(--gold-300); display:grid; place-items:center; margin-top:2px; }
+.tick svg{ width:12px; height:12px; }
+
+.demo{ background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.20); border-radius:24px; padding:clamp(22px,2.6vw,32px); }
+.demo__label{ font-family:var(--display); font-size:.72rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.72); margin:0 0 18px; }
+.posting{ background:#fff; border-radius:16px; padding:20px 22px; margin-bottom:12px; color:var(--ink-70); }
+.posting:last-child{ margin-bottom:0; }
+.posting__top{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+.posting__title{ font-family:var(--display); font-size:1.08rem; font-weight:500; color:var(--ink); line-height:1.3; }
+.posting__org{ font-size:.86rem; color:var(--ink-45); margin-top:3px; }
+.posting__tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.tag{ font-size:.78rem; background:var(--green-050); color:var(--green-700); border-radius:var(--r-pill); padding:4px 11px; }
+.clock{ flex:none; text-align:right; }
+.clock__d{ font-family:var(--display); font-size:1.22rem; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+.clock__t{ font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-45); margin-top:1px; }
+.clock__bar{ height:3px; background:var(--green-100); border-radius:2px; margin-top:14px; overflow:hidden; }
+.clock__fill{ height:100%; width:38%; background:var(--gold); border-radius:2px; transition:width 1s linear; }
+.posting--dead{ background:rgba(255,255,255,.12); border:1px dashed rgba(255,255,255,.34); }
+.posting--dead .posting__title{ color:rgba(255,255,255,.80); text-decoration:line-through; text-decoration-color:rgba(255,255,255,.45); }
+.posting--dead .posting__org{ color:rgba(255,255,255,.72); background:none; }
+.posting--dead .tag{ color:rgba(255,255,255,.78); background:rgba(255,255,255,.14); }
+.posting--dead .clock__d{ color:rgba(255,255,255,.88); }
+.posting--dead .clock__t{ color:rgba(255,255,255,.68); }
+.deadnote{ display:flex; align-items:center; gap:9px; font-size:.87rem; color:var(--gold-300); margin-top:14px; text-wrap:pretty; }
+.deadnote svg{ width:14px; height:14px; flex:none; }
+
+/* ============================ CTA ============================ */
+.cta{ background:var(--paper); text-align:center; }
+.cta__mark{ width:clamp(74px,8vw,96px); margin:0 auto 26px; }
+.cta .lede{ margin-inline:auto; }
+.cta form{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px; }
+.cta input{
+  min-height:52px; width:min(420px,100%); padding:13px 22px; font:inherit; font-size:1rem;
+  border:1px solid rgba(12,127,53,.28); border-radius:var(--r-pill); background:#fff; color:var(--ink);
+}
+.cta input::placeholder{ color:var(--ink-45); }
+.cta__note{ margin-top:22px; font-size:.86rem; color:var(--ink-45); }
+.cta__ok{
+  display:none; align-items:center; justify-content:center; gap:10px; margin-top:26px;
+  font-family:var(--display); color:var(--green-700); font-weight:500;
+}
+.cta__ok.is-on{ display:flex; }
+.cta__partner{ margin-top:34px; font-size:.9rem; color:var(--ink-45); }
+
+/* ============================ FOOTER ============================ */
+.ftr{ background:var(--green-900); color:rgba(255,255,255,.66); padding-block:clamp(48px,5vw,72px) 34px; }
+.ftr__grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:clamp(30px,4vw,60px); }
+.ftr__logo img{ height:clamp(46px,4.2vw,58px); width:auto; }
+.ftr__tag{ margin-top:20px; max-width:34ch; font-size:.93rem; }
+.ftr h2.ftr__h{ color:#fff; margin:0 0 14px; font-size:.78rem; letter-spacing:.15em; text-transform:uppercase; font-weight:600; }
+.ftr ul{ list-style:none; margin:0; padding:0; }
+.ftr li{ margin-bottom:10px; }
+.ftr a{ text-decoration:none; color:rgba(255,255,255,.66); }
+.ftr a:hover{ color:#fff; }
+.ftr__base{ margin-top:clamp(40px,5vw,64px); padding-top:22px; border-top:1px solid rgba(255,255,255,.14); display:flex; flex-wrap:wrap; gap:12px 24px; justify-content:space-between; font-size:.84rem; color:rgba(255,255,255,.5); }
+
+/* ============================ RESPONSIVE ============================ */
+@media (max-width:1080px){
+  .hero__grid{ grid-template-columns:1fr; }
+  .hero__rail{ border-left:0; border-top:1px solid var(--line-soft); }
+  .benefits{ grid-template-columns:repeat(2,1fr); }
+  .expiry__grid{ grid-template-columns:1fr; }
+  .cohort{ grid-template-columns:104px minmax(0,1.4fr) minmax(0,1fr) 116px; }
+  .cohort__date{ display:none; }
+}
+@media (max-width:900px){
+  .hdr__nav, .hdr__cta{ display:none; }
+  .burger{ display:grid; }
+  .problem__grid{ grid-template-columns:1fr; }
+  .stage__btn{ grid-template-columns:56px 1fr 44px; row-gap:6px; }
+  .stage__d{ grid-column:2; }
+  .stage__btn .chip{ grid-column:2; justify-self:start; }
+  .stage__n{ grid-row:1; }
+  .stage__t{ grid-row:1; }
+  .stage__btn .chev{ grid-row:1; grid-column:3; }
+  .stage__cols{ grid-template-columns:1fr; padding-left:56px; gap:22px; }
+  .stage__cols > div + div{ border-left:0; padding-left:0; padding-top:22px; border-top:1px solid var(--line); }
+  .ftr__grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:640px){
+  .benefits{ grid-template-columns:1fr; }
+  .cohort{ grid-template-columns:1fr auto; row-gap:6px; }
+  .cohort__mode{ grid-column:1; }
+  .cohort__title{ grid-column:1; }
+  .cohort__meta{ grid-column:1; }
+  .save{ grid-row:1 / span 3; grid-column:2; }
+  .ftr__grid{ grid-template-columns:1fr; }
+  .hero__actions .btn, .cta form .btn, .cta input{ width:100%; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+}
+
+@media print{
+  .hdr,.mobile,.save,.burger,.cta form,.note{ display:none !important; }
+  body{ font-size:11.5pt; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="hdr" id="hdr">
+  <div class="wrap hdr__in">
+    <a class="hdr__logo" href="#top" aria-label="Dhanashala — home">
+      <img src="assets/dhanashala-lockup-compact.png" alt="Dhanashala" width="330" height="110">
+    </a>
+    <nav class="hdr__nav" aria-label="Primary">
+      <a href="#stages">The five stages</a>
+      <a href="#cohorts">Cohorts</a>
+      <a href="#gains">What you get</a>
+      <a href="#fresh">Fresh listings</a>
+    </nav>
+    <div class="hdr__cta">
+      <a class="btn btn--gold" href="#access">Join early access</a>
+    </div>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu"><span></span></button>
+  </div>
+  <div class="mobile" id="mobileNav">
+    <a href="#stages">The five stages</a>
+    <a href="#cohorts">Cohorts</a>
+    <a href="#gains">What you get</a>
+    <a href="#fresh">Fresh listings</a>
+    <a class="btn btn--gold" href="#access">Join early access</a>
+  </div>
+</header>
+
+<main id="main">
+<a id="top"></a>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__panel">
+        <img class="hero__mark" src="assets/dhanashala-emblem.png" alt="" aria-hidden="true" width="300" height="213">
+        <h1>From your first year to your <em>first offer</em>.</h1>
+        <p class="hero__sub">Four years of college should not be spent guessing which career fits you. Dhanashala is one connected path — academic learning, the skills employers actually ask for, real projects, and a hiring pipeline that meets you while you are still a student.</p>
+        <div class="hero__actions">
+          <a class="btn btn--gold" href="#access">Join early access</a>
+          <a class="btn btn--onDark" href="#stages">See the five stages</a>
+        </div>
+        <p class="hero__note">Engineering, degree and other programmes · India</p>
+      </div>
+
+      <div class="hero__rail">
+        <p class="rail__eyebrow">The path, end to end</p>
+        <p class="rail__h" id="rail-h">Five stages, one path</p>
+        <ul class="rail">
+          <li><a href="#stage-1"><span class="rail__n">01</span><span class="rail__t">Academic education, done properly</span><span class="rail__s">YouTube</span></a></li>
+          <li><a href="#stage-2"><span class="rail__n">02</span><span class="rail__t">Skills the job market asks for</span><span class="rail__s">Learning paths</span></a></li>
+          <li><a href="#stage-3"><span class="rail__n">03</span><span class="rail__t">Learn, practise, become job-ready</span><span class="rail__s">Platform</span></a></li>
+          <li><a href="#stage-4"><span class="rail__n">04</span><span class="rail__t">Listings that close themselves</span><span class="rail__s">Job portal</span></a></li>
+          <li><a href="#stage-5"><span class="rail__n">05</span><span class="rail__t">Start in year one</span><span class="rail__s">Early start</span></a></li>
+        </ul>
+        <p class="rail__foot">Stages 1 and 2 are running today. <a href="#stages">See what each one contains</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PROBLEM ============================ -->
+<section class="problem">
+  <div class="wrap problem__grid">
+    <div class="problem__body">
+      <p class="eyebrow">Why this exists</p>
+      <h2>Most students don't choose a career. They drift into one.</h2>
+      <div class="lede" style="margin-top:20px">
+        <p>During my B.Tech I explored digital marketing, finance, stock markets, software development, HR and several other fields. I spent a lot of time trying directions without ever reaching a clear milestone.</p>
+        <p>I regret not having proper career direction earlier. I don't want other students to go through the same experience — so this is being built to give them what I did not have.</p>
+      </div>
+      <p class="problem__sign">You should not have to spend three years finding out what you are good at.</p>
+    </div>
+    <ul class="problem__list">
+      <li>
+        <h3>Nobody tells you what is hiring</h3>
+        <p>Which domains are growing, which are saturated, which skills recur across every listing — students pick a specialisation on the basis of a friend's advice or a brochure.</p>
+      </li>
+      <li>
+        <h3>Certificates are not proof</h3>
+        <p>A course provider sells a certificate. An employer wants to see that you can actually do the work: the project, the write-up, the thing you can explain in an interview.</p>
+      </li>
+      <li>
+        <h3>The advice arrives far too late</h3>
+        <p>Career guidance usually lands in final year, from people who have not hired anyone this cycle. By then it is a scramble, not a direction.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ STAGES ============================ -->
+<section id="stages">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">The ecosystem</p>
+      <h2>Five stages, one path</h2>
+      <p class="lede">Each stage is a step. Start at the first and keep going — or join wherever you already are. Stages three to five are being built, not sold.</p>
+    </div>
+
+    <div class="stage" id="stage-1">
+      <h3 style="margin:0"><button class="stage__btn" type="button" aria-expanded="false" aria-controls="p1" aria-label="Stage 1 of 5: Academic education through YouTube. Available now.">
+        <span class="stage__n" aria-hidden="true">01</span aria-hidden="true">
+        <span class="stage__t" aria-hidden="true">Academic education through YouTube</span>
+        <span class="stage__d" aria-hidden="true">High-quality academic content that helps students understand their subjects and score better marks.</span>
+        <span class="chip chip--live" aria-hidden="true">Available now</span>
+        <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+      </button></h3>
+      <div class="stage__panel" id="p1" role="region">
+        <div class="stage__inner"><div class="stage__cols">
+          <div>
+            <h4>What this stage is</h4>
+            <p>Long-form subject lessons built for students who want marks and understanding, not just a passing grade. Free and public, so an audience and a community form before any product does.</p>
+          </div>
+          <div>
+            <h4>What you walk away with</h4>
+            <p>Notes you can revise from, a stronger grip on the subject, and a channel you can put in front of an employer as evidence you teach yourself in public.</p>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="stage" id="stage-2">
+      <h3 style="margin:0"><button class="stage__btn" type="button" aria-expanded="false" aria-controls="p2" aria-label="Stage 2 of 5: On-demand, in-demand skills. Available now.">
+        <span class="stage__n" aria-hidden="true">02</span aria-hidden="true">
+        <span class="stage__t" aria-hidden="true">On-demand, in-demand skills</span>
+        <span class="stage__d" aria-hidden="true">Structured learning paths for the skills the job market is actually hiring for.</span>
+        <span class="chip chip--live" aria-hidden="true">Available now</span>
+        <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+      </button></h3>
+      <div class="stage__panel" id="p2" role="region">
+        <div class="stage__inner"><div class="stage__cols">
+          <div>
+            <h4>What this stage is</h4>
+            <p>Playlists and learning paths, each one mapped to a specific role rather than a broad &ldquo;full-stack&rdquo; umbrella. The point is to show students what a job description actually asks for, and where their gap is.</p>
+          </div>
+          <div>
+            <h4>What you walk away with</h4>
+            <p>A shortlist of domains you can defend with reasons, and a named skills gap for each one &mdash; instead of a vague feeling about which direction &ldquo;feels right&rdquo;.</p>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="stage" id="stage-3">
+      <h3 style="margin:0"><button class="stage__btn" type="button" aria-expanded="false" aria-controls="p3" aria-label="Stage 3 of 5: Online learning and career support. In development.">
+        <span class="stage__n" aria-hidden="true">03</span aria-hidden="true">
+        <span class="stage__t" aria-hidden="true">Online learning &amp; career support</span>
+        <span class="stage__d" aria-hidden="true">Live and recorded classes, practical projects, <span class="nb">1:1 guidance</span>, mock interviews, resume and portfolio building.</span>
+        <span class="chip chip--build" aria-hidden="true">In development</span>
+        <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+      </button></h3>
+      <div class="stage__panel" id="p3" role="region">
+        <div class="stage__inner"><div class="stage__cols">
+          <div>
+            <h4>What this stage is</h4>
+            <p>The point where a student stops being a viewer and starts producing. Shipped projects with real review, a resume that survives a six-second scan, LinkedIn and professional profile work, and interview practice with feedback.</p>
+          </div>
+          <div>
+            <h4>What you walk away with</h4>
+            <p>A portfolio that starts conversations and a career narrative you can say out loud without rehearsing it. The goal is not to finish a course — it is to be job-ready.</p>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="stage" id="stage-4">
+      <h3 style="margin:0"><button class="stage__btn" type="button" aria-expanded="false" aria-controls="p4" aria-label="Stage 4 of 5: A student-focused job portal. Planned.">
+        <span class="stage__n" aria-hidden="true">04</span aria-hidden="true">
+        <span class="stage__t" aria-hidden="true">A student-focused job portal</span>
+        <span class="stage__d" aria-hidden="true">Internships and entry-level roles, connected to the people who finished the programmes.</span>
+        <span class="chip chip--plan" aria-hidden="true">Planned</span>
+        <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+      </button></h3>
+      <div class="stage__panel" id="p4" role="region">
+        <div class="stage__inner"><div class="stage__cols">
+          <div>
+            <h4>What this stage is</h4>
+            <p>A job portal built for students, fed by the same pipeline that runs the programmes. Trained students work as interns researching the Indian job market and maintaining the platform itself — they are the users building it.</p>
+          </div>
+          <div>
+            <h4>What you walk away with</h4>
+            <p>Applications that were still open when you sent them. Listings carry an expiry and remove themselves at the closing date, so nobody wastes a week on a role that has already gone.</p>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="stage" id="stage-5">
+      <h3 style="margin:0"><button class="stage__btn" type="button" aria-expanded="false" aria-controls="p5" aria-label="Stage 5 of 5: Start early. Planned.">
+        <span class="stage__n" aria-hidden="true">05</span aria-hidden="true">
+        <span class="stage__t" aria-hidden="true">Start early</span>
+        <span class="stage__d" aria-hidden="true">Reach students in their first year, across engineering, degree and other programmes.</span>
+        <span class="chip chip--plan" aria-hidden="true">Planned</span>
+        <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+      </button></h3>
+      <div class="stage__panel" id="p5" role="region">
+        <div class="stage__inner"><div class="stage__cols">
+          <div>
+            <h4>What this stage is</h4>
+            <p>Domain discovery, skill development and real projects started in year one — three or four years before the first placement season, instead of final-year panic.</p>
+          </div>
+          <div>
+            <h4>What you walk away with</h4>
+            <p>A direction you chose, with a body of evidence behind it. By the time recruiters look at you, the choice has already been tested against real work.</p>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ COHORTS ============================ -->
+<section class="cohorts" id="cohorts">
+  <div class="wrap">
+    <div class="cohorts__head">
+      <div>
+        <p class="eyebrow">Enrolment</p>
+        <h2>Next cohorts</h2>
+        <p class="lede" style="margin-top:14px">Short, specific and run in small batches. Save a seat to get the intake details first.</p>
+        <p class="note">Sample intake data — replace with your live schedule</p>
+      </div>
+      <a class="btn btn--ghost" href="#cohorts">Explore all cohorts</a>
+    </div>
+
+    <div class="cohort">
+      <span class="cohort__mode">Full time</span>
+      <span class="cohort__title">Data Analytics for Engineers</span>
+      <span class="cohort__meta">Pune · Hybrid</span>
+      <span class="cohort__date">Starts 6 Oct 2026</span>
+      <button class="save" type="button" aria-pressed="false" data-cohort="Data Analytics for Engineers">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        <span>Save</span>
+      </button>
+    </div>
+
+    <div class="cohort">
+      <span class="cohort__mode">Part time</span>
+      <span class="cohort__title">Frontend Development</span>
+      <span class="cohort__meta">Remote · India</span>
+      <span class="cohort__date">Starts 13 Oct 2026</span>
+      <button class="save" type="button" aria-pressed="false" data-cohort="Frontend Development">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        <span>Save</span>
+      </button>
+    </div>
+
+    <div class="cohort">
+      <span class="cohort__mode">Full time</span>
+      <span class="cohort__title">Digital Marketing &amp; Growth</span>
+      <span class="cohort__meta">Pune · On campus</span>
+      <span class="cohort__date">Starts 20 Oct 2026</span>
+      <button class="save" type="button" aria-pressed="false" data-cohort="Digital Marketing and Growth">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        <span>Save</span>
+      </button>
+    </div>
+
+    <div class="cohort">
+      <span class="cohort__mode">Weekend</span>
+      <span class="cohort__title">Python for Automation</span>
+      <span class="cohort__meta">Hyderabad · Hybrid</span>
+      <span class="cohort__date">Starts 27 Oct 2026</span>
+      <button class="save" type="button" aria-pressed="false" data-cohort="Python for Automation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        <span>Save</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHAT YOU GET ============================ -->
+<section id="gains">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">The output</p>
+      <h2>What a student walks away with</h2>
+      <p class="lede">Not a certificate. Six things that are still true a year later, whatever route you came in by.</p>
+    </div>
+    <div class="benefits">
+      <div class="benefit">
+        <div class="benefit__rule"></div>
+        <h3>Academic foundation</h3>
+        <ul>
+          <li><h4>Better marks</h4><p>Teaching aimed at the exam and at the understanding underneath it.</p></li>
+          <li><h4>Notes that survive</h4><p>Revisable material instead of a playlist you never finish.</p></li>
+          <li><h4>Doubt support</h4><p>Questions answered before they turn into a lost week.</p></li>
+        </ul>
+      </div>
+      <div class="benefit">
+        <div class="benefit__rule"></div>
+        <h3>Job-relevant skills</h3>
+        <ul>
+          <li><h4>Role-mapped tracks</h4><p>Each path written against real job descriptions, not a course catalogue.</p></li>
+          <li><h4>Tool-level fluency</h4><p>Enough depth to be useful on a team, not enough to be a certificate.</p></li>
+          <li><h4>A defensible shortlist</h4><p>Two or three domains you can justify, with the gap named for each.</p></li>
+        </ul>
+      </div>
+      <div class="benefit">
+        <div class="benefit__rule"></div>
+        <h3>Practical proof</h3>
+        <ul>
+          <li><h4>Real projects</h4><p>Work with a brief, a deadline and something at the end of it.</p></li>
+          <li><h4>Reviewed, not graded</h4><p>Someone reads it and tells you what a hiring manager would say.</p></li>
+          <li><h4>1:1 project guidance</h4><p>For the part where you are stuck and the tutorial ran out.</p></li>
+        </ul>
+      </div>
+      <div class="benefit">
+        <div class="benefit__rule"></div>
+        <h3>Career readiness</h3>
+        <ul>
+          <li><h4>Mock interviews</h4><p>Rehearsed with feedback, including the questions you cannot prepare for.</p></li>
+          <li><h4>Resume building</h4><p>Built to be read in six seconds by someone who has read a thousand.</p></li>
+          <li><h4>LinkedIn &amp; profile</h4><p>A professional presence that matches the work, not just the degree.</p></li>
+        </ul>
+      </div>
+      <div class="benefit">
+        <div class="benefit__rule"></div>
+        <h3>Digital portfolio</h3>
+        <ul>
+          <li><h4>A portfolio site</h4><p>One link that shows the work instead of describing it.</p></li>
+          <li><h4>Written case studies</h4><p>The thinking behind the project, which is what gets asked about.</p></li>
+          <li><h4>Proof, not certificates</h4><p>Things a recruiter can open and judge for themselves.</p></li>
+        </ul>
+      </div>
+      <div class="benefit">
+        <div class="benefit__rule"></div>
+        <h3>Placement support</h3>
+        <ul>
+          <li><h4>Internship pipeline</h4><p>Entry points that do not ask for three years of experience.</p></li>
+          <li><h4>Referrals that mean something</h4><p>Introductions through teams that have hired from the programme.</p></li>
+          <li><h4>Mentorship &amp; guidance</h4><p>Someone who has done the job and has time to answer.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ EXPIRY ============================ -->
+<section class="expiry" id="fresh">
+  <div class="wrap expiry__grid">
+    <div>
+      <p class="eyebrow eyebrow--light">The problem we are actually fixing</p>
+      <h2>Listings that close themselves.</h2>
+      <div class="lede" style="margin-top:18px">
+        <p>Applying to a job that closed three weeks ago is the most common way students lose a week. On Dhanashala, a listing carries its closing date and is removed the moment it passes — nobody has to remember to tidy up.</p>
+      </div>
+      <ul class="expiry__points">
+        <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><h3>Expiry set at publish</h3><p>The closing date is part of the listing, not an afterthought added by a recruiter.</p></div></li>
+        <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><h3>Removed automatically</h3><p>When the clock runs out the listing leaves search, and the application button goes with it.</p></div></li>
+        <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><h3>No dead listings to click</h3><p>Students only ever see roles a recruiter still intends to fill.</p></div></li>
+      </ul>
+    </div>
+
+    <!-- Interactive demonstration of the expiry rule. Replace with live portal data. -->
+    <div class="demo" role="group" aria-label="Demonstration of listing expiry">
+      <p class="demo__label">How a listing behaves</p>
+      <div class="posting">
+        <div class="posting__top">
+          <div>
+            <p class="posting__title">Data Analyst Intern</p>
+            <p class="posting__org">Consumer products · Bengaluru</p>
+          </div>
+          <div class="clock">
+            <p class="clock__d" id="clockDays" aria-live="off">2d 14h</p>
+            <p class="clock__t">until it closes</p>
+          </div>
+        </div>
+        <div class="posting__tags"><span class="tag">Open now</span><span class="tag">Remote friendly</span><span class="tag">6 months</span></div>
+        <div class="clock__bar" role="presentation"><div class="clock__fill" id="clockFill"></div></div>
+      </div>
+      <div class="posting posting--dead" aria-label="Expired listing, no longer accepting applications">
+        <div class="posting__top">
+          <div>
+            <p class="posting__title">Marketing Associate</p>
+            <p class="posting__org">D2C brand · Mumbai</p>
+          </div>
+          <div class="clock">
+            <p class="clock__d">Closed</p>
+            <p class="clock__t">4 days ago</p>
+          </div>
+        </div>
+        <p class="deadnote">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+          Removed from search. No application button, no wasted week.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CTA ============================ -->
+<section class="cta" id="access">
+  <div class="wrap" style="max-width:760px">
+    <img class="cta__mark" src="assets/dhanashala-emblem.png" alt="" aria-hidden="true" width="300" height="213">
+    <p class="eyebrow" style="justify-content:center">Early access</p>
+    <h2>Start in year one.</h2>
+    <p class="lede" style="margin-top:16px">If you are in your first year — or you are two years from placements and still deciding — get on the list, and we will tell you what is open and when.</p>
+    <form id="accessForm" novalidate>
+      <label class="visually-hidden" for="email">Your email address</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@college.edu" required>
+      <button class="btn btn--gold" type="submit">Request early access</button>
+    </form>
+    <p class="cta__note" id="accessNote">Free to join. No payment details, no calls unless you ask for one.</p>
+    <p class="cta__ok" id="accessOk" role="status">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+      You're on the list. We'll be in touch.
+    </p>
+    <p class="cta__partner">This platform is being designed in conversation with industry partners, so that what we teach is what gets hired.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <div class="ftr__logo"><img src="assets/dhanashala-lockup-horizontal-white.png" alt="Dhanashala — A universe of success" width="500" height="206"></div>
+        <p class="ftr__tag">A universe of success — academic learning, job-relevant skills, real work and a way in, from the first year of college.</p>
+      </div>
+      <div>
+        <h2 class="ftr__h">Explore</h2>
+        <ul>
+          <li><a href="#stages">The five stages</a></li>
+          <li><a href="#cohorts">Cohorts</a></li>
+          <li><a href="#gains">What you get</a></li>
+          <li><a href="#fresh">Fresh listings</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="ftr__h">Get in touch</h2>
+        <ul>
+          <li><a href="#access">Join early access</a></li>
+          <li><a href="mailto:hello@dhanashala.example">hello@dhanashala.example</a></li>
+          <li><a href="#access">Partner with us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ftr__base">
+      <span>© 2026 Dhanashala. All rights reserved.</span>
+      <span>Stages 3–5 are in development or planned. Cohort details shown are samples.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- sticky header state ---- */
+  var hdr = document.getElementById("hdr");
+  var onScroll = function(){
+    if (window.scrollY > 8) hdr.classList.add("is-stuck");
+    else hdr.classList.remove("is-stuck");
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, {passive:true});
+
+  /* ---- mobile menu ---- */
+  var burger = document.getElementById("burger");
+  var mobile = document.getElementById("mobileNav");
+  burger.addEventListener("click", function(){
+    var open = burger.getAttribute("aria-expanded") === "true";
+    burger.setAttribute("aria-expanded", String(!open));
+    burger.setAttribute("aria-label", open ? "Open menu" : "Close menu");
+    mobile.classList.toggle("is-open", !open);
+  });
+  mobile.addEventListener("click", function(e){
+    if (e.target.closest("a")) {
+      burger.setAttribute("aria-expanded","false");
+      burger.setAttribute("aria-label","Open menu");
+      mobile.classList.remove("is-open");
+    }
+  });
+
+  /* ---- stage accordions ---- */
+  var stageBtns = Array.prototype.slice.call(document.querySelectorAll(".stage__btn"));
+  function setStage(btn, open){
+    var panel = document.getElementById(btn.getAttribute("aria-controls"));
+    btn.setAttribute("aria-expanded", String(open));
+    panel.classList.toggle("is-open", open);
+  }
+  stageBtns.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      setStage(btn, btn.getAttribute("aria-expanded") !== "true");
+    });
+  });
+  /* open the stage referenced by the hero rail / deep links */
+  function openFromHash(){
+    var id = location.hash.replace("#","");
+    if (!id || id.indexOf("stage-") !== 0) return;
+    var row = document.getElementById(id);
+    if (!row) return;
+    var btn = row.querySelector(".stage__btn");
+    stageBtns.forEach(function(b){ setStage(b, b === btn); });
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+
+  /* ---- save / unsave a cohort (persisted locally) ---- */
+  var KEY = "dhanashala.saved";
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ saved = {}; }
+  document.querySelectorAll(".save").forEach(function(btn){
+    var name = btn.dataset.cohort;
+    var label = btn.querySelector("span");
+    var paint = function(){
+      var on = !!saved[name];
+      btn.setAttribute("aria-pressed", String(on));
+      label.textContent = on ? "Saved" : "Save";
+    };
+    paint();
+    btn.addEventListener("click", function(){
+      if (saved[name]) delete saved[name]; else saved[name] = Date.now();
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e){}
+      paint();
+    });
+  });
+
+  /* ---- expiry countdown (demonstration of the stage-4 rule) ---- */
+  var days = document.getElementById("clockDays");
+  var fill = document.getElementById("clockFill");
+  if (days && fill){
+    /* 2d 14h window, anchored to page load */
+    var TOTAL = (2 * 24 + 14) * 60 * 60 * 1000;
+    var end = Date.now() + TOTAL;
+    var tick = function(){
+      var left = Math.max(0, end - Date.now());
+      var h = Math.floor(left / 3600000);
+      var d = Math.floor(h / 24);
+      days.textContent = d + "d " + (h % 24) + "h";
+      fill.style.width = (left / TOTAL * 100).toFixed(2) + "%";
+    };
+    tick();
+    if (!reduce) setInterval(tick, 1000);
+  }
+
+  /* ---- early access form (front-end only; wire to your backend) ---- */
+  var form = document.getElementById("accessForm");
+  var ok = document.getElementById("accessOk");
+  var note = document.getElementById("accessNote");
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var input = form.querySelector("input");
+    if (!input.checkValidity()){
+      input.focus();
+      note.textContent = "Please enter a valid email address so we can reach you.";
+      note.style.color = "#A67400";
+      return;
+    }
+    form.style.display = "none";
+    if (note) note.style.display = "none";
+    ok.classList.add("is-on");
+  });
+})();
+</script>
+</body>
+</html>

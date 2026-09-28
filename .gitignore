@@ -1,0 +1,6 @@
+# nothing to ignore — this is a static site
+# but keep OS/editor noise out if the repo grows
+.DS_Store
+Thumbs.db
+*.log
+.env
